@@ -6,10 +6,13 @@
     -webkit-user-select: none;
 }
 
-body {
+html,body {
+    height: 100%;
     font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
 }
-  
+.terminal-body ,.terminal-content {
+    height: 100%;
+}
 /* Terminal */
 .terminal-container {
     position: relative;

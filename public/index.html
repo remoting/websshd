@@ -27,7 +27,7 @@
           
             var termContent = $("<div>", {
                 'id': name,
-                'class': "content"
+                'class': "terminal-content"
             });
  
             termContent.appendTo(xbody);
@@ -39,11 +39,6 @@
                 'force new connection': true
             });
 
-            var _termId = "evn§namespace§podid§cmd";
-
-            socket.emit('createTerminal', _termId, function (term_id) {
-                term.termId = term_id;
-            });
 
             socket.on('connect',function() {
                 socket.emit("resize", {
@@ -64,13 +59,19 @@
                     'w': c,
                     'h': k
                 });
-            });
- 
-            term.sizeToFit();
-            term.focus();
+            }); 
 
             $(window).resize(function () {
                 term.sizeToFit();
+            });
+
+            //////
+            var _termId = "evn§namespace§podid§cmd";
+
+            socket.emit('createTerminal', _termId, function (term_id) {
+                term.termId = term_id;
+                term.sizeToFit();
+                term.focus();
             });
         };
 

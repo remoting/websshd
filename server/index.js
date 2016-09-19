@@ -39,23 +39,22 @@ sio.sockets.on('connection', function (socket) {
 
         var term = pty.spawn('bash', [], {
             name: 'xterm-color',
-            cols: 80,
-            rows: 30,
-            cwd: "./",
-            env: process.env
+            cwd: "~/"
         });
-
+        
+        term.setEncoding("utf8");
         term.on('data', function(data) {
             socket.emit('output', btoa(data));
         }); 
         term.on('exit', function(){
-                socket.emit('exit', {})
+            socket.emit('exit', {})
         });
         //////////////////////
         socket.on('input', function (data) {
             term.write(atob(data));
         });
         socket.on('resize', function (data) {
+            console.log(data.w + "－－－" + data.h);
             term.resize(data.w, data.h);
         });
         socket.on('disconnect', function(){
