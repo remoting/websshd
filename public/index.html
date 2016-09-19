@@ -6,21 +6,10 @@
         <script type="text/javascript" src="/sh.min.js"></script>
     </head>
     <body>
-        <div class="tabs-header"></div>
-        <div class="tabs-content"></div>
+        <div class="terminal-body"></div>
         <script>
         var i = 0;
-        var $tabsContent = $(".tabs-content");
-        var $tabsHeader = $(".tabs-header");
-
-        var switchTab = function(name) {
-            $tabsContent.find(".tab-content").removeClass("active");
-            $tabsContent.find("#"+name).addClass("active");
-
-            $tabsHeader.find(".tab").removeClass("active");
-            $tabsHeader.find("#"+name).addClass("active");
-        };
-
+        var xbody = $(".terminal-body");
         var openTerminal = function(name) {
             if (!name) {
                 name = "terminal-"+i;
@@ -32,36 +21,27 @@
                 cols: 80,
                 rows: 24
             });
-
-            var tab = $("<div>", {
+          
+            var termContent = $("<div>", {
                 'id': name,
-                'text': name,
-                'class': "tab",
-                'click': function(e) {
-                    switchTab(name);
-                    term.sizeToFit();
-                    term.focus();
-                }
-            });            
-
-            var tabContent = $("<div>", {
-                'id': name,
-                'class': "tab-content"
+                'class': "content"
             });
-
-            tab.appendTo($tabsHeader);
-            tabContent.appendTo($tabsContent);
+ 
+            termContent.appendTo(xbody);
 
             
-            term.open(tabContent[0]);
+            term.open(termContent[0]);
 
             var socket = io.connect([window.location.protocol, '//', window.location.host].join(''), {
                 'force new connection': true
             });
-            var _termId = "ip§id§cmd";
-            this.socket.emit('createTerminal', _termId, function (term_id) {
+            
+            var _termId = "evn§namespace§podid§cmd";
+
+            socket.emit('createTerminal', _termId, function (term_id) {
                 term.termId = term_id;
             });
+
             socket.on('connect',function() {
                 socket.emit("resize", {
                     'w': term.cols,
@@ -82,8 +62,7 @@
                     'h': k
                 });
             });
-
-            switchTab(name);
+ 
             term.sizeToFit();
             term.focus();
 
@@ -96,12 +75,7 @@
         $(document).ready(function() {
             openTerminal();
         });
-
-        // Double click to open a new terminal
-        $tabsHeader.dblclick(function() {
-            openTerminal();
-        })
-
+ 
         // resize active terminal
         $(window).resize(function () {
             if (Terminal.focus) Terminal.focus.sizeToFit();
