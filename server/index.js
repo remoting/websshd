@@ -29,7 +29,7 @@ var server = http.createServer(app);
 var sio = io.listen(server);
   
 sio.sockets.on('connection', function (socket) {
-    
+
     console.log('A socket connected!');
 
     socket.on('createTerminal', function(term_id, func){
@@ -65,7 +65,7 @@ sio.sockets.on('connection', function (socket) {
     });
 });
 
-var port = 5000;
+var port = 50000;
 var host = "0.0.0.0";
 
 server.listen(port, host, function() {
