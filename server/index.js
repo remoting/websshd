@@ -6,7 +6,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
-var qs = require('querystring');
 
 var btoa = function(s) {
     return (new Buffer(s)).toString('base64');
