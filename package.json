@@ -14,6 +14,7 @@
     "cookie-session": "^2.0.0-alpha.1",
     "express": "^4.14.0",
     "pty.js": "^0.3.1",
+    "querystring": "^0.2.0",
     "sh.js": "^1.1.1",
     "socket.io": "^1.4.8"
   }

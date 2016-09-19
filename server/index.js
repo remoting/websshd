@@ -6,6 +6,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
+var qs = require('querystring');
 
 var btoa = function(s) {
     return (new Buffer(s)).toString('base64');
@@ -41,10 +42,10 @@ sio.sockets.on('connection', function (socket) {
             name: 'xterm-color',
             cwd: "~/"
         });
-        
+
         term.setEncoding("utf8");
         term.on('data', function(data) {
-            socket.emit('output', btoa(data));
+            socket.emit('output', btoa(qs.escape(data)));
         }); 
         term.on('exit', function(){
             socket.emit('exit', {})

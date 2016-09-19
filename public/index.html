@@ -6,7 +6,7 @@
         <link rel="stylesheet" type="text/css" href="style.css">
         <script src="/jquery.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        <script type="text/javascript" src="/sh.min.js"></script>
+        <script type="text/javascript" src="/sh.js"></script>
     </head>
     <body>
         <div class="terminal-body"></div>
@@ -47,7 +47,7 @@
                 });
             });
             socket.on('output', function (data) {
-                term.write(atob(data));
+                term.write(unescape(atob(data)));
             });
 
             term.on("data", function (c) {
