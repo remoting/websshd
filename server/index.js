@@ -45,14 +45,14 @@ sio.sockets.on('connection', function (socket) {
 
         term.setEncoding("utf8");
         term.on('data', function(data) {
-            socket.emit('output', btoa(qs.escape(data)));
+            socket.emit('output', data);
         }); 
         term.on('exit', function(){
             socket.emit('exit', {})
         });
         //////////////////////
         socket.on('input', function (data) {
-            term.write(atob(data));
+            term.write(data);
         });
         socket.on('resize', function (data) {
             console.log(data.w + "－－－" + data.h);
