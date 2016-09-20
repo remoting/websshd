@@ -20,6 +20,20 @@ var md5 = function(str) {
     return crypto.createHash("md5").update(str).digest("hex");
 };
 
+var des_encrypt = function(key, plaintext) {     
+    var cipher = crypto.createCipheriv('des-ede3', new Buffer(key), new Buffer(0));  
+    cipher.setAutoPadding(true)
+    var ciph = cipher.update(plaintext, 'utf8', 'hex');  
+    return ciph += cipher.final('hex'); 
+}
+
+var des_decrypt = function(key, plaintext) {  
+    var decipher = crypto.createDecipheriv('des-ede3', new Buffer(key), new Buffer(0));  
+    decipher.setAutoPadding(true)  
+    var txt = decipher.update(plaintext, 'hex', 'utf8');  
+    return txt += decipher.final('utf8');      
+}
+
 var app = express();
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
