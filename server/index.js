@@ -56,15 +56,15 @@ sio.sockets.on('connection', function (socket) {
         var args = des_decrypt(key, term_id).split('§');
         console.log(args.join(','));
         // 验证
-        if (args.length!=6) {
+        if (args.length!=7) {
             console.log("ERROR args length:", args.length)
             return func("error"); 
         }
 
         var md5str=args.pop();
-        if ( md5str != md5(args.join('§')) ) {
+        if ( md5str != md5(args.join('§')+'§'+key) ) {
             args[4] = ''+ (new Date()).valueOf();
-            console.log("ERROR params:", des_encrypt(key, args.join('§') + '§' + md5(args.join('§'))));
+            console.log("ERROR params:", des_encrypt(key, args.join('§') + '§' + md5(args.join('§')+'§'+key)));
             return func("error");
         }
 
@@ -75,7 +75,7 @@ sio.sockets.on('connection', function (socket) {
         }
         
         var host=process.env['K8S_HOST_'+args[0].toUpperCase()];
-        var cmd = ['-s', host, 'exec', '-it', '--namespace', args[1], args[2], args[3]] 
+        var cmd = ['-s', host, 'exec', '-it', '--namespace', args[1], '-p', args[2], '-c', args[3], args[4]] 
         var term = pty.spawn('kubectl', cmd, {
             name: 'xterm-color',
             cwd: "~/"
