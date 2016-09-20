@@ -62,9 +62,9 @@ sio.sockets.on('connection', function (socket) {
         }
 
         var md5str=args.pop();
-        if ( md5str != md5(args.join('§')+'§'+key) ) {
+        if ( md5str != md5(args.join('§')+'§'+env_key) ) {
             args[4] = ''+ (new Date()).valueOf();
-            console.log("ERROR params:", des_encrypt(key, args.join('§') + '§' + md5(args.join('§')+'§'+key)));
+            console.log("ERROR params:", des_encrypt(key, args.join('§') + '§' + md5(args.join('§')+'§'+env_key)));
             return func("error");
         }
 
