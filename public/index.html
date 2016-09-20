@@ -66,8 +66,7 @@
             });
 
             //////
-            var _termId = "evn§namespace§podid§cmd";
-
+            var _termId = window.location.search.substr(1);
             socket.emit('createTerminal', _termId, function (term_id) {
                 term.termId = term_id;
                 term.sizeToFit();
