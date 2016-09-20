@@ -68,6 +68,12 @@
             //////
             var _termId = getQueryString('token'); // window.location.search.substr(1);
             socket.emit('createTerminal', _termId, function (term_id) {
+                if(term_id=='error'){
+                    return alert("当前会话token错误！");
+                }
+                if(term_id=='timeout'){
+                    return alert("当前会话token超时！");
+                }
                 term.termId = term_id;
                 term.sizeToFit();
                 term.focus();

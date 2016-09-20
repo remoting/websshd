@@ -57,21 +57,21 @@ sio.sockets.on('connection', function (socket) {
         console.log(args.join(','));
         // 验证
         if (args.length!=6) {
-            console.log("ERROR args length:", args.length);
-            return;
+            console.log("ERROR args length:", args.length)
+            return func("error"); 
         }
 
         var md5str=args.pop();
         if ( md5str != md5(args.join('§')) ) {
             args[4] = ''+ (new Date()).valueOf();
             console.log("ERROR params:", des_encrypt(key, args.join('§') + '§' + md5(args.join('§'))));
-            return;
+            return func("error");
         }
 
         var step = Math.abs((new Date()).valueOf() - Number(args.pop()))
         if ( step > 1000*env_step) {
             console.log("ERROR step:", step);
-            return;
+            return func("timeout");
         }
         
         var host=process.env['K8S_HOST_'+args[0].toUpperCase()];
