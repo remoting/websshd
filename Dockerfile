@@ -2,7 +2,7 @@ FROM index.alauda.cn/library/alpine
 
 WORKDIR /app
 
-RUN apk --no-cache add tzdata nodejs python && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN apk --no-cache add tzdata nodejs && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ADD kubectl /usr/local/bin/
 ADD package.json /app/
 ADD node_modules /app/
