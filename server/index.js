@@ -17,7 +17,7 @@ var base64_decode = function(str) { // atob
 };
 
 var md5 = function(str) {
-    return crypto.createHash("md5").update(str).digest("hex");
+    return crypto.createHash("md5").update(str, 'utf8').digest("hex");
 };
 
 var des_encrypt = function(key, plaintext) {     
@@ -105,7 +105,7 @@ sio.sockets.on('connection', function (socket) {
 
 var host = "0.0.0.0";
 var env_port = process.env.WEBSSH_PORT || 50000;
-var env_key = process.env.WEBSSH_KEY || "yihecloud";
+var env_key = process.env.WEBSSH_KEY || "yihecloud.com";
 var env_step = Number(process.env.EXPIRATION_TIME) || 60;
 
 server.listen(env_port, host, function() {
