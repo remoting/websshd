@@ -93,7 +93,7 @@ sio.sockets.on('connection', function (socket) {
             term.write(data);
         });
         socket.on('resize', function (data) {
-            console.log(data.w + "－－－" + data.h);
+            console.log('resize:' + data.w + "－－－" + data.h);
             term.resize(data.w, data.h);
         });
         socket.on('disconnect', function(){
