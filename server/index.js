@@ -75,7 +75,7 @@ sio.sockets.on('connection', function (socket) {
         }
         
         var host=process.env['K8S_HOST_'+args[0].toUpperCase()];
-        var cmd = ['-s', host, 'exec', '-it', '--namespace', args[1], '-p', args[2], '-c', args[3], args[4]] 
+        var cmd = ['-s', host, 'exec', '-it', '--namespace', args[1], args[2], '-c', args[3], args[4]] 
         var term = pty.spawn('kubectl', cmd, {
             name: 'xterm-color',
             cwd: "~/"
