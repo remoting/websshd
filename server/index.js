@@ -52,7 +52,8 @@ sio.sockets.on('connection', function (socket) {
     console.log('A socket connected!');
 
     socket.on('createTerminal', function(term_id, func){
-        var args = base64_decode(term_id).split('§');
+        var key = md5(env_key).substr(0, 24);
+        var args = des_decrypt(key, term_id).split('§');
         console.log(args.join(','));
         // 验证
         if (args.length!=6) {
@@ -61,9 +62,9 @@ sio.sockets.on('connection', function (socket) {
         }
 
         var md5str=args.pop();
-        if ( md5str != md5(args.join('§')+env_key) ) {
+        if ( md5str != md5(args.join('§')) ) {
             args[4] = ''+ (new Date()).valueOf();
-            console.log("ERROR params:", base64_encode(args.join('§') + '§' + md5(args.join('§')+env_key)));
+            console.log("ERROR params:", des_encrypt(key, args.join('§') + '§' + md5(args.join('§'))));
             return;
         }
 
