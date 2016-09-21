@@ -35,7 +35,7 @@ var des_decrypt = function(key, plaintext) {
 }
 
 var app = express();
-app.use(express.static(path.join(__dirname, '../public')));
+app.use("/exec", express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cookieSession({
@@ -45,7 +45,7 @@ app.use(cookieSession({
 }));
  
 var server = http.createServer(app);
-var sio = io.listen(server);
+var sio = io.listen(server, {path: '/exec/socket.io'});
 
 sio.sockets.on('connection', function (socket) {
 

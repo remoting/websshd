@@ -3,10 +3,10 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <script src="/jquery.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <script type="text/javascript" src="/sh.js"></script>
+        <link rel="stylesheet" type="text/css" href="./style.css">
+        <script src="./jquery.js"></script>
+        <script src="./socket.io/socket.io.js"></script>
+        <script src="./sh.js"></script>
     </head>
     <body>
         <div class="terminal-body"></div>
@@ -36,7 +36,8 @@
             term.open(termContent[0]);
 
             var socket = io.connect([window.location.protocol, '//', window.location.host].join(''), {
-                'force new connection': true
+                'force new connection': true,
+                path: '/exec/socket.io'
             });
 
 
