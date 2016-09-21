@@ -53,7 +53,14 @@ sio.sockets.on('connection', function (socket) {
 
     socket.on('createTerminal', function(term_id, func){
         var key = md5(env_key).substr(0, 24);
-        var args = des_decrypt(key, term_id).split('§');
+        var args;
+        try{
+            args = des_decrypt(key, term_id).split('§');
+        }catch(e){
+            console.log("ERROR in:", e);
+            return func("error"); 
+        }
+        
         console.log(args.join(','));
         // 验证
         if (args.length!=7) {
